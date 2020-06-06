@@ -1,4 +1,13 @@
 {% extends 'base.html' %}
 	{% block body %}
-		<h2>Hello World!!!</h2>
+		<form method="POST">
+			<label for="uname">Name:</label><br>
+			<input type="text" name="uname" required><br>
+			
+			<label for="uage">Age:</label><br>
+			<input type="number" name="uage" min="18" max="99" required><br><br>
+			
+			<input type="submit">
+			<input type="reset">
+		</form> 
 	{% endblock %}
