@@ -4,8 +4,8 @@
 			{% for employee in employees %}
 				<table border=1 cellpadding=10 width=20%>
 					<tr>
-						<td width=60%>{{ employee[0] }}</td>
-						<td width=40%>{{ employee[1] }}</td>
+						<td width=60%>{{ employee.name }}</td>
+						<td width=40%>{{ employee.age }}</td>
 					</tr>
 				</table>
 			{% endfor %}

@@ -13,11 +13,16 @@ app.config['MYSQL_USER'] = db['mysql_user']
 app.config['MYSQL_PASSWORD'] = db['mysql_password']
 app.config['MYSQL_DB'] = db['mysql_db']
 
+'''By default the cursor is created using the default cursor class. Different cursor class can be specified by setting the 'cursorclass' parameter to the cursor class needed. Use DictCursor to have results returned as Python dictionaries instead of the default which is a Python list.'''
+
+app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
+
 # instantiate an object for the MySQL module
 mysql = MySQL(app)
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
+	message = ''
 	if request.method == "POST":
 		name = request.form['uname']
 		age = request.form['uage']
@@ -29,7 +34,6 @@ def index():
 		count = cur.execute(query)
 		if count > 0:
 			message = "That name already exists. Choose another one."
-			return render_template("index.html", message = message, title="Form")
 		else:
 			# take cursor object and call execute function to execute query
 			cur.execute("INSERT INTO table_name(name, age) VALUES(%s, %s)", (name, age))
@@ -40,7 +44,7 @@ def index():
 			# cleanup
 			cur.close()
 		
-	return render_template("index.html", title="Form")
+	return render_template("index.html", title="Form", message=message)
 
 @app.route('/employees')
 def employees():
