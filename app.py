@@ -1,13 +1,17 @@
 from flask import Flask, render_template, request
 from flask_mysqldb import MySQL
+import yaml
 
 app = Flask(__name__)
 
+# open db.yaml using yaml module
+db = yaml.load(open('db.yaml'))
+
 # Configure the db
-app.config['MYSQL_HOST'] = ""
-app.config['MYSQL_USER'] = ""
-app.config['MYSQL_PASSWORD'] = ""
-app.config['MYSQL_DB'] = ""
+app.config['MYSQL_HOST'] = db['mysql_host']
+app.config['MYSQL_USER'] = db['mysql_user']
+app.config['MYSQL_PASSWORD'] = db['mysql_password']
+app.config['MYSQL_DB'] = db['mysql_db']
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
