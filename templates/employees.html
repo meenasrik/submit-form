@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+	{% block body %}
+		{% if employees %}
+			{% for employee in employees %}
+				<table border=1 cellpadding=10 width=20%>
+					<tr>
+						<td width=60%>{{ employee[0] }}</td>
+						<td width=40%>{{ employee[1] }}</td>
+					</tr>
+				</table>
+			{% endfor %}
+		{% endif %}
+		<p>{{ message }}</p>
+	{% endblock %}
+	

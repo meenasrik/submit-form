@@ -42,6 +42,18 @@ def index():
 		
 	return render_template("index.html", title="Form")
 
+@app.route('/employees')
+def employees():
+	cur = mysql.connection.cursor()
+	count = cur.execute("SELECT * FROM table_name")
+	if count > 0:
+		employees = cur.fetchall()
+		cur.close()
+		return render_template("employees.html", title="Employees", employees=employees)
+	else: 
+		message = "Currently no employees in the list"
+		return render_template("employees.html", title="Employees", message=message)
+
 if __name__ == '__main__':
 	app.run(debug=True)
 	
