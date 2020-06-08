@@ -1,7 +1,8 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, session, flash
 from flask_mysqldb import MySQL
 from flask_bootstrap import Bootstrap
 import yaml
+import os
 
 app = Flask(__name__)
 bootstrap = Bootstrap(app)
@@ -17,11 +18,11 @@ app.config['MYSQL_USER'] = db['mysql_user']
 app.config['MYSQL_PASSWORD'] = db['mysql_password']
 app.config['MYSQL_DB'] = db['mysql_db']
 app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
+app.config['SECRET_KEY'] = os.urandom(24)
 
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-	message = ''
 	if request.method == "POST":
 		try:
 			name = request.form['uname']
@@ -35,7 +36,7 @@ def index():
 			count = cur.execute(query)
 			
 			if count > 0:
-				message = "That name already exists. Choose another one."
+				flash('That name already exists <br> Choose another one', 'warning')
 			else:
 				cur.execute("INSERT INTO table_name(name, age) VALUES(%s, %s)", (name, age))
 
@@ -43,19 +44,18 @@ def index():
 				mysql.connection.commit()
 
 				# display the success message
-				message = "Successfully added the details"
+				flash('Successfully added the details', 'success')
 
 				# cleanup
 				cur.close()
 		except:
-			message = "Failed to add details"
+			flash('Failed to add details', 'danger')
 		
-	return render_template("index.html", title="Home", message=message)
+	return render_template("index.html", title="Home")
 
 
 @app.route('/employees')
 def employees():
-	message = ''
 	cur = mysql.connection.cursor()
 	count = cur.execute("SELECT * FROM table_name")
 	
@@ -63,10 +63,10 @@ def employees():
 		employees = cur.fetchall()
 	else:
 		employees = None
-		message = "Currently no employees in the list"
+		flash('Currently no employees in the list', 'secondary')
 		
 	cur.close()
-	return render_template("employees.html", title="Employees", employees=employees, message=message)
+	return render_template("employees.html", title="Employees", employees=employees)
 
 if __name__ == '__main__':
 	app.run(debug=True)
