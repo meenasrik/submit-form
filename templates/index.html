@@ -1,14 +1,21 @@
 {% extends 'base.html' %}
-	{% block body %}
-		<form method="POST">
-			<label for="uname">Name:</label><br>
-			<input type="text" name="uname" required><br>
+	{% block sub_content %}
+	
+		<form method="POST" class="mt-5">
+		
+			<div class="form-group">
+				<label for="uname">Name</label>
+				<input type="text" class="form-control" name="uname" required>
+			</div>
 			
-			<label for="uage">Age:</label><br>
-			<input type="number" name="uage" min="18" max="99" required><br><br>
+			<div class="form-group">
+				<label for="uage">Age</label>
+				<input type="number" class="form-control" name="uage" required min="18">
+			</div>
 			
-			<input type="submit">
-			<input type="reset">
-		</form> 
+			<button type="submit" class="btn btn-primary ml-0">Submit</button> 
+			<button type="reset" class="btn btn-secondary float-right">Reset</button>
+		</form>
+
 		<p>{{ message }}</p>
 	{% endblock %}

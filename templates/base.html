@@ -1,12 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>{{ title }}</title>
+	{% block head %}
+	
+		<!-- Required meta tags -->
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		
+		{% block styles %}
+			<!-- Bootstrap CSS -->
+			{{ bootstrap.load_css() }}
+		{% endblock %}
+		
+		<title>{{ title }}</title>
+		
+	{% endblock %}
 </head>
 <body>
-	{% block body %}
+
+	<!-- navbar content -->
+  {% block navbar %}
+  	{% include '_navbar.html' %}
+  {% endblock %}	
+
+	<!-- Your page content -->
+	{% block content %}
+		<div class="container">
+
+			<div class="row justify-content-center">
+				{% block sub_content %}{% endblock %}
+			</div> <!-- row div ends -->
+			
+		</div> <!-- container div ends -->
 	{% endblock %}
+	
+	{% block scripts %}
+		<!-- Optional JavaScript -->
+		{{ bootstrap.load_js() }}
+	{% endblock %}
+	
 </body>
 </html>

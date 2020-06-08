@@ -1,14 +1,25 @@
 {% extends 'base.html' %}
-	{% block body %}
-		{% if employees %}
-			{% for employee in employees %}
-				<table border=1 cellpadding=10 width=20%>
+	{% block sub_content %}
+		{% if employees != None %}
+			<table class="table table-dark table-striped table-bordered w-75 mx-auto mt-5">
+
+				<thead>
 					<tr>
-						<td width=60%>{{ employee.name }}</td>
-						<td width=40%>{{ employee.age }}</td>
+						<th scope="col">Employee</th>
+						<th scope="col">Age</th>
 					</tr>
-				</table>
-			{% endfor %}
+				</thead>
+
+				<tbody>
+					{% for employee in employees %}
+						<tr>
+							<td>{{ employee.name }}</td>
+							<td>{{ employee.age }}</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+
+			</table>
 		{% endif %}
 		<p>{{ message }}</p>
 	{% endblock %}
